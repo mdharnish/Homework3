@@ -1,7 +1,7 @@
 ---
 title: "Homework 3"
+author: "Dharnish Muralidharan"
 output: html_document
-date: "Dharnish Muralidharan"
 ---
 
 ```{r setup, include=FALSE}
@@ -65,4 +65,5 @@ The estimated increase in average sales per customer is about $3.66, which is we
 
 ## 4.
 The redesign does not actually lead to a meaningful increase in average sales per customer transaction, even though the observed data suggest it does.
+
 
