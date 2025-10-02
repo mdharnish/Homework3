@@ -1,0 +1,68 @@
+---
+title: "Homework 3"
+output: html_document
+date: "Dharnish Muralidharan"
+---
+
+```{r setup, include=FALSE}
+data <- read.csv("homework3_data.csv")
+View(data)
+```
+
+## 1.
+
+The company should commit to the website redesign, as it results in a substantial increase in average sales per transaction that surpasses the required threshold.
+
+## 2. (a)
+```{r fig.width = 10, fig.height = 10}
+set.seed(123)
+
+library(ggplot2)
+library(colorfindr)
+
+dell_img <- "dell_homepage.png"
+dat_cols <- get_colors(dell_img)
+cols <- make_palette(dat_cols[1:100, ])
+
+dell_cat <- c("0" = cols[1], "1" = cols[10])
+
+ggplot(data, aes(x = as.character(design), y = sales, fill = as.character(design))) +
+  geom_boxplot(width = 0.7, color = "black", outlier.size = 2) +
+  scale_fill_manual(values = dell_cat, name = "Website Design", labels = c("Old", "New")) +
+  labs(title = "Boxplots of Sales for Old vs New Website Design",
+       x = "Website Design", y = "Sales ($)") +
+  theme_minimal(base_size = 14)
+
+ggplot(data, aes(x = sales, fill = as.character(design), color = as.character(design), group = design)) +
+  geom_histogram(position = "identity", bins = 15, alpha = 0.4, linewidth = 0.5) +
+  scale_fill_manual(values = dell_cat, name = "Website Design", labels = c("Old", "New")) +
+  scale_color_manual(values = dell_cat, name = "Website Design", labels = c("Old", "New")) +
+  labs(title = "Histogram of Sales for Old vs New Website Design",
+       x = "Sales ($)", y = "Count") +
+  theme_minimal(base_size = 14)
+```
+The boxplot shows that the new design has a higher median purchase amount compared to the old design. The separation between the medians is substantial, indicating an improvement in sales that surpasses the company’s specified threshold.
+
+The histogram demonstrates that the distribution of sales under the new design is shifted to the right relative to the old design. This rightward shift reflects consistently larger transaction values under the redesign, with the difference clearly exceeding the required threshold.
+
+As per Question 3, the figures use Dell’s company color palette, extracted from the Dell website using the colorfindr package. Because the design variable is categorical (Old vs New), two distinct brand colors from the palette were applied. This follows the principle of mapping colors to data by using a categorical scheme for group comparisons.
+
+## 2. (b)
+```{r}
+old_mean <- mean(data$sales[data$design == 0])
+old_mean
+
+new_mean <- mean(data$sales[data$design == 1])
+new_mean
+
+increase <- new_mean - old_mean
+increase
+```
+Based on the sample data, the average sales under the old design were approximately $31.85, while the average sales under the new design were approximately $35.51. This represents an estimated increase of about $3.66 per customer if the redesign is implemented.
+
+## 2. (c)
+The estimated increase in average sales per customer is about $3.66, which is well above the company’s required threshold of $1.80. Therefore, the redesign satisfies the company’s financial criterion, and the evidence supports moving forward with implementation.
+
+## 4.
+The redesign does not actually lead to a meaningful increase in average sales per customer transaction, even though the observed data suggest it does.
+
